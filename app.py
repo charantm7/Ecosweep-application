@@ -78,6 +78,7 @@ def view_complaints():
         complaints = cur.fetchall()
     return render_template('view_complaints.html', complaints=complaints)
 
+
 if __name__ == '__main__':
     init_db()  # Initialize the database on startup
     app.run(debug=True)

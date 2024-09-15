@@ -76,7 +76,8 @@
     <textarea id="description" rows="4" placeholder="Describe the issue..."></textarea>
 
     <!-- Submit Button -->
-    <button id="submitComplaint">Submit Complaint</button>
+    <button id="submitComplaint">Submit complaint</button>
+    <button id="back">Back</button>
 </div>
 
 <script>
@@ -126,9 +127,13 @@
         const location = locationInput.value;
         alert(`Complaint submitted!\nLocation: ${location}\nDescription: ${description}`);
     });
+
+
 </script>
 <div class="container">
-    <button>View complaint</button>
+    <form>
+        <a href="view_complaints.html">view complaints</a>
+    </form>
 </div>
 
 
