@@ -28,7 +28,7 @@
             margin-top: 10px;
             font-weight: bold;
         }
-        input, textarea, button {
+        input, textarea, button, select {
             width: 100%;
             padding: 10px;
             margin: 10px 0;
@@ -63,10 +63,17 @@
 
     <!-- Camera Capture Section -->
     <label for="camera">Capture an Image of the Issue:</label>
-    <video id="cameraStream" class="camera-preview"></video>
+    <video id="cameraStream" class="camera-preview" autoplay></video>
     <button id="captureImage">Capture Image</button>
     <canvas id="cameraOutput" class="camera-preview" style="display:none;"></canvas>
-    
+
+    <!-- Camera Switcher -->
+    <label for="cameraSwitch">Select Camera:</label>
+    <select id="cameraSwitch">
+        <option value="user">Front Camera</option>
+        <option value="environment">Rear Camera</option>
+    </select>
+
     <!-- Upload Image -->
     <label for="imageUpload">Or Upload an Image:</label>
     <input type="file" id="imageUpload" accept="image/*">
@@ -76,8 +83,7 @@
     <textarea id="description" rows="4" placeholder="Describe the issue..."></textarea>
 
     <!-- Submit Button -->
-    <button id="submitComplaint">Submit complaint</button>
-    <button id="back">Back</button>
+    <button id="submitComplaint">Submit Complaint</button>
 </div>
 
 <script>
@@ -98,23 +104,47 @@
         }
     });
 
-    // Camera Access
+    // Camera Access Variables
+    let stream;
     const cameraStream = document.getElementById('cameraStream');
     const cameraOutput = document.getElementById('cameraOutput');
     const captureButton = document.getElementById('captureImage');
     const canvas = cameraOutput.getContext('2d');
+    const cameraSwitch = document.getElementById('cameraSwitch');
 
-    // Access the camera
-    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-        navigator.mediaDevices.getUserMedia({ video: true })
-        .then(stream => {
-            cameraStream.srcObject = stream;
-            cameraStream.play();
-        });
+    // Function to access the selected camera
+    function accessCamera(facingMode) {
+        if (stream) {
+            stream.getTracks().forEach(track => track.stop());
+        }
+
+        const constraints = {
+            video: { facingMode: facingMode }
+        };
+
+        navigator.mediaDevices.getUserMedia(constraints)
+            .then(function (mediaStream) {
+                stream = mediaStream;
+                cameraStream.srcObject = mediaStream;
+                cameraStream.play();
+            })
+            .catch(function (err) {
+                console.error("Error accessing camera: " + err);
+            });
     }
+
+    // Initialize with front camera by default
+    accessCamera('user');
+
+    // Event listener to switch between front and rear cameras
+    cameraSwitch.addEventListener('change', () => {
+        accessCamera(cameraSwitch.value);
+    });
 
     // Capture Image
     captureButton.addEventListener('click', () => {
+        cameraOutput.width = cameraStream.videoWidth;
+        cameraOutput.height = cameraStream.videoHeight;
         canvas.drawImage(cameraStream, 0, 0, cameraOutput.width, cameraOutput.height);
         cameraOutput.style.display = 'block';
         cameraStream.style.display = 'none';
@@ -127,15 +157,7 @@
         const location = locationInput.value;
         alert(`Complaint submitted!\nLocation: ${location}\nDescription: ${description}`);
     });
-
-
 </script>
-<div class="container">
-    <form>
-        <a href="view_complaints.html">view complaints</a>
-    </form>
-</div>
-
 
 </body>
 </html>
