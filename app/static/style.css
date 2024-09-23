@@ -52,10 +52,23 @@ html::-webkit-scrollbar {
 
 .undl {
     text-decoration: none;
+    
   }
   
 .undl:hover {
-    color: white;
+    
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+
+  .footer-undl {
+    text-decoration: none;
+    color: antiquewhite;
+  }
+  
+.footer-undl:hover {
+    color: antiquewhite;
     text-decoration: none;
     cursor: pointer;
   }
