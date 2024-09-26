@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: lightblue;
+        }
+
+        .Signup-container {
+            background-color: rgb(230, 240, 239);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 500px;
+
+        }
+
+        .Signup-container img {
+            width: 60px;
+            height: 40px;
+            margin-bottom: 1px;
+        }
+
+        .Signup-container input {
+            width: 95%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid rgb(49, 243, 81);
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .Signup-container input[type="checkbox"] {
+            width: auto;
+        }
+
+        .Signup-container button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .Signup-container button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="Signup-container">
+        <div class="logo" style="text-align: center;">
+
+            <!-- Add the logo here -->
+            <img src="https://res.cloudinary.com/dljndgwcl/image/upload/v1727355734/IMG_20240926_182912-removebg-preview_pzku1l.png"
+                alt="Logo">
+
+            <!-- Login form -->
+            <form>
+                <h4 style="text-align:start">
+                    E-mail
+                    <input type="email" id="email" placeholder="Email" required>
+
+                    <h4 style="text-align: start;">First Name
+                        <input type="text" id="first_name" placeholder="First Name" required>
+
+                        <h4 style="text-align:start">
+                            Password
+
+                            <input type="password" id="password" placeholder="Password" required>
+
+                            <h4 style="text-align:start">
+                                Confirm Password
+
+                                <input type="password" id="confirmpassword" placeholder="Confirm Password" required>
+
+                                <!-- Checkbox to show/hide password -->
+                                <form>
+                                    <label>
+                                        <input type="checkbox" id="showPassword"> Show
+                                        Password
+                                    </label>
+                                </form>
+
+                                <button type="submit">Sign Up</button>
+            </form>
+        </div>
+
+        <script>
+            // JavaScript to toggle the password visibility
+            const passwordInput = document.getElementById('password');
+            const showPasswordCheckbox = document.getElementById('showPassword');
+
+            showPasswordCheckbox.addEventListener('change', function () {
+                if (this.checked) {
+                    passwordInput.type = 'text';
+                } else {
+                    passwordInput.type = 'password';
+                }
+            });
+        </script>
+
+</body>
+
+</html>
