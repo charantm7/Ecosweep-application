@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign Up</title>
+    <title>Login Form</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -41,7 +41,6 @@
 
         .Signup-container input[type="checkbox"] {
             width: auto;
-            height: 100%;
         }
 
         .Signup-container button {
@@ -76,28 +75,20 @@
                     E-mail
                     <input type="email" id="email" placeholder="Email" required>
 
-                    <h4 style="text-align: start;">First Name
-                        <input type="text" id="first_name" placeholder="First Name" required>
+                    <h4 style="text-align:start">
+                        Password
 
-                        <h4 style="text-align:start">
-                            Password
+                        <input type="password" id="password" placeholder="Password" required>
 
-                            <input type="password" id="password" placeholder="Password" required>
+                        <!-- Checkbox to show/hide password -->
+                        <form>
+                            <label>
+                                <input type="checkbox" id="showPassword"> Show
+                                Password
+                            </label>
+                        </form>
 
-                            <h4 style="text-align:start">
-                                Confirm Password
-
-                                <input type="password" id="confirmpassword" placeholder="Confirm Password" required>
-
-                                <!-- Checkbox to show/hide password -->
-                                <form>
-                                    <label>
-                                        <input type="checkbox" id="showPassword"> Show
-                                        Password
-                                    </label>
-                                </form>
-
-                                <button type="submit">Sign Up</button>
+                        <button type="Login">Sign Up</button>
             </form>
         </div>
 
