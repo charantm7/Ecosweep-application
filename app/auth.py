@@ -9,10 +9,17 @@ def signup():
         name=request.form.get('first_name')
         pass1=request.form.get('password')
         pass2=request.form.get('confirmpassword')
-        print(email,name,pass1,pass2)
-
-        if pass1 != pass2:
-            flash('Invalid password')
+        
+        if not email:
+            flash('Please enter correct email address ex: @gmail.com',category='error')
+        elif len(name) <=2:
+            flash('Name should be greater than 2 characters!',category='error')
+        elif len(pass1) <=6:
+            flash('Password should be greater than 6 characters!',category='error')
+        elif pass1 != pass2:
+            flash('Password mismatch!', category='error')
+        else:
+            flash('Account created!', category='success')
     return render_template('usersignup.html')
 
 @Auth.route('/login',methods=['GET','POST'])
@@ -20,10 +27,9 @@ def login():
     if request.method == 'POST':
         email = request.form.get('email')
         password = request.form.get('password')
-        print("Email: ",email)
-        print("password: ",password)
+        
     return render_template('userlogin.html',boolean=True)
 
 @Auth.route('/logout')
 def logout():
-    return render_template('hi.html')
+    return render_template('#')

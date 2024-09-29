@@ -25,7 +25,7 @@
         <nav class="navbar navbar-expand navbar-light bg-light fixed-top">
             <a class="nav-link text-dark" class="navbar-brand text-success" style="font-weight:bold;" href="#"
                 id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <img src="https://res.cloudinary.com/dljndgwcl/image/upload/v1727358059/IMG_20240926_190853_g9cn0z.png"
+                <img src="https://res.cloudinary.com/dljndgwcl/image/upload/v1727628217/IMG-20240924-WA0001_1_-removebg-preview_iiygxz.png"
                     height="30px" width="100px" alt="...">
 
             </a>
@@ -35,7 +35,6 @@
             </button>
             <div class="dropdown-menu bg-dark" aria-labelledby="navbarDropdown">
                 <a class="dropdown-item text-white bg-dark" id="account" href="#">Account</a>
-                <a class="dropdown-item text-white bg-dark" id="signup" href="/signup">Sign Up</a>
                 <a class="dropdown-item text-white bg-dark" id="login" href="/login">Login</a>
                 <a class="dropdown-item text-white bg-dark" id="logout" href="/logout">Logout</a>
 
@@ -78,6 +77,27 @@
                 </div>
             </div>
         </nav>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        {% for category, message in messages %}
+        {% if category == 'error' %}
+        <div class="alert alert-danger alert-dismissable fade show" role="alert">
+            {{ message }}
+            <button type="button" class="close" data-dismiss="alert">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        {% else %}
+        <div class="alert alert-success alert-dismissable fade show" role="alert">
+            {{ message }}
+            <button type="button" class="close" data-dismiss="alert">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        {% endif %}
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
         {% block content %}
         <div id="landingpage" class="carousel slide" data-ride="carousel">
             <div class="carousel-inner">

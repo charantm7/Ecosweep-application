@@ -72,6 +72,11 @@
     .login-container button:hover {
         background-color: #aeb4af;
     }
+
+    .color-signup-hovered a:hover {
+        color: rgb(70, 67, 67);
+
+    }
 </style>
 {% endblock %}
 
@@ -98,7 +103,10 @@
                     <button type="submit">Login</button>
                     <br>
                     <br>
-                    <p>Don't have an account? <a href="/signup">signup</a></p>
+                    <div class="color-signup-hovered">
+                        <p>Don't have an account? <a href="/signup" style="color:rgb(67, 144, 67);">signup</a></p>
+                        <p><a href="#" style="color:rgb(21, 22, 21)">Forget Password?</a></p>
+                    </div>
         </form>
     </div>
 </div>
