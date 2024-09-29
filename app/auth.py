@@ -1,9 +1,18 @@
-from flask import Blueprint,render_template,request
+from flask import Blueprint,render_template,request,flash
 
 Auth = Blueprint('Auth',__name__)
 
-@Auth.route('/signup')
+@Auth.route('/signup',methods=['POST','GET',])
 def signup():
+    if request.method=='POST':
+        email=request.form.get('email')
+        name=request.form.get('first_name')
+        pass1=request.form.get('password')
+        pass2=request.form.get('confirmpassword')
+        print(email,name,pass1,pass2)
+
+        if pass1 != pass2:
+            flash('Invalid password')
     return render_template('usersignup.html')
 
 @Auth.route('/login',methods=['GET','POST'])
@@ -17,4 +26,4 @@ def login():
 
 @Auth.route('/logout')
 def logout():
-    return render_template('logut.html')
+    return render_template('hi.html')

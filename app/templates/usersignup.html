@@ -1,120 +1,151 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "base.html" %}
+{% block title %}Sign Up{% endblock %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign Up</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: lightblue;
-        }
+{% block head %}
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-image: url("https://res.cloudinary.com/dljndgwcl/image/upload/v1727611091/pexels-jplenio-1103970_aitwcy.jpg");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
 
-        .Signup-container {
-            background-color: rgb(230, 240, 239);
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 500px;
+    .Signup-container {
+        width: 90%;
+        margin: auto;
+        padding: 20px;
+        background-color: rgb(255, 255, 255, 0.3);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        margin-top: 50px;
+    }
 
-        }
+    .Signup-container img {
+        align-items: center;
+        width: 60px;
+        height: 40px;
+        margin-bottom: 1px;
+    }
 
-        .Signup-container img {
-            width: 60px;
-            height: 40px;
-            margin-bottom: 1px;
-        }
+    .Signup-container input {
+        width: 100%;
+        padding: 10px;
+        margin: 10px 0;
+        border: 1px solid rgb(255, 255, 255);
+        opacity: 0.6;
+        border-radius: 5px;
+        font-size: 16px;
+    }
 
-        .Signup-container input {
-            width: 95%;
-            padding: 10px;
-            margin: 10px 0;
-            border: 1px solid rgb(49, 243, 81);
-            border-radius: 5px;
-            font-size: 16px;
-        }
+    .Signup-container input[type="checkbox"] {
+        width: auto;
+        height: 100%;
+    }
 
-        .Signup-container input[type="checkbox"] {
-            width: auto;
-            height: 100%;
-        }
+    .Signup-container button {
+        width: 100%;
+        padding: 10px;
+        background-color: #e9efe9;
+        color: rgb(0, 0, 0);
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+        align-items: center;
+    }
 
-        .Signup-container button {
-            width: 100%;
-            padding: 10px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            font-size: 16px;
-            cursor: pointer;
-        }
+    .Signup-container h4 {
+        font-size: 16px;
+        display: block;
+        font-weight: bold;
+        unicode-bidi: isolate;
 
-        .Signup-container button:hover {
-            background-color: #45a049;
-        }
-    </style>
-</head>
 
-<body>
+    }
 
-    <div class="Signup-container">
-        <div class="logo" style="text-align: center;">
+    .Signup-container button:hover {
+        background-color: #bac0bb;
+    }
+</style>
+{% endblock %}
 
-            <!-- Add the logo here -->
-            <img src="https://res.cloudinary.com/dljndgwcl/image/upload/v1727355734/IMG_20240926_182912-removebg-preview_pzku1l.png"
-                alt="Logo">
 
-            <!-- Login form -->
-            <form>
-                <h4 style="text-align:start">
-                    E-mail
-                    <input type="email" id="email" placeholder="Email" required>
+{% block content %}
+<div class="Signup-container">
+    <div class="logo" style="text-align: center;">
 
-                    <h4 style="text-align: start;">First Name
-                        <input type="text" id="first_name" placeholder="First Name" required>
+        <!-- Add the logo here -->
+        <img src="https://res.cloudinary.com/dljndgwcl/image/upload/v1727355734/IMG_20240926_182912-removebg-preview_pzku1l.png"
+            alt="Logo">
+
+        <!-- signup form -->
+        <!--here i have been post request to the server which updates my data to the server, 
+            well these kind of request should be inside the form with method ="post"or "get" in a lowercase-->
+        <form method="post">
+            <h4 style="text-align:start">
+                E-mail <br>
+                <input type="email" name="email" id="email" placeholder="Email" required><!--when ever i should link these data into my backend to get the information from input from the user , 
+                    well i should define a name function for that particular input, what i am going to retrive-->
+
+                <h4 style="text-align: start;">First Name <br>
+                    <input type="text" name="first_name" id="first_name" placeholder="First Name" required>
+
+                    <h4 style="text-align:start">
+                        Password <br>
+
+                        <input type="password" name="password" id="password" placeholder="Password" required>
 
                         <h4 style="text-align:start">
-                            Password
+                            Confirm Password <br>
 
-                            <input type="password" id="password" placeholder="Password" required>
+                            <input type="password" name="confirmpassword" id="confirmpassword"
+                                placeholder="Confirm Password" required>
 
-                            <h4 style="text-align:start">
-                                Confirm Password
+                            <!-- Checkbox to show/hide password -->
+                            <form>
+                                <label>
+                                    <input type="checkbox" id="showPassword"> Show
+                                    Password
+                                </label>
+                            </form>
 
-                                <input type="password" id="confirmpassword" placeholder="Confirm Password" required>
+                            <button type="submit">Sign Up</button>
 
-                                <!-- Checkbox to show/hide password -->
-                                <form>
-                                    <label>
-                                        <input type="checkbox" id="showPassword"> Show
-                                        Password
-                                    </label>
-                                </form>
+        </form>
+    </div>
 
-                                <button type="submit">Sign Up</button>
-            </form>
-        </div>
+    <script>
+        // JavaScript to toggle the password visibility
+        const passwordInput = document.getElementById('password');
+        const showPasswordCheckbox = document.getElementById('showPassword');
 
-        <script>
-            // JavaScript to toggle the password visibility
-            const passwordInput = document.getElementById('password');
-            const showPasswordCheckbox = document.getElementById('showPassword');
+        showPasswordCheckbox.addEventListener('change', function () {
+            if (this.checked) {
+                passwordInput.type = 'text';
+            } else {
+                passwordInput.type = 'password';
+            }
+        });
+    </script>
+    <script>
+        // JavaScript to toggle the password visibility
+        const passwordinput = document.getElementById('confirmpassword');
+        const showpasswordCheckbox = document.getElementById('showPassword');
 
-            showPasswordCheckbox.addEventListener('change', function () {
-                if (this.checked) {
-                    passwordInput.type = 'text';
-                } else {
-                    passwordInput.type = 'password';
-                }
-            });
-        </script>
-
-</body>
-
-</html>
+        showpasswordCheckbox.addEventListener('change', function () {
+            if (this.checked) {
+                passwordinput.type = 'text';
+            } else {
+                passwordinput.type = 'password';
+            }
+        });
+    </script>
+    {% endblock %}

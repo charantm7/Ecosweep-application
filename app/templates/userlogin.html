@@ -1,111 +1,122 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "base.html" %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: lightblue;
-        }
+{% block title %}Login{% endblock %}
 
-        .Signup-container {
-            background-color: rgb(230, 240, 239);
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 500px;
+{% block head %}
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-image: url("https://res.cloudinary.com/dljndgwcl/image/upload/v1727611091/pexels-jplenio-1103970_aitwcy.jpg");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
 
-        }
+    .login-container {
+        width: 80%;
+        margin: auto;
+        padding: 20px;
+        background-color: rgb(255, 255, 255, 0.3);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        margin-top: 50px;
+    }
 
-        .Signup-container img {
-            width: 60px;
-            height: 40px;
-            margin-bottom: 1px;
-        }
+    .login-container img {
+        width: 60px;
+        height: 40px;
+        margin-bottom: 8px;
+    }
 
-        .Signup-container input {
-            width: 95%;
-            padding: 10px;
-            margin: 10px 0;
-            border: 1px solid rgb(49, 243, 81);
-            border-radius: 5px;
-            font-size: 16px;
-        }
+    .login-container h4 {
+        font-size: 16px;
+        display: block;
+        font-weight: bold;
+        unicode-bidi: isolate;
 
-        .Signup-container input[type="checkbox"] {
-            width: auto;
-        }
 
-        .Signup-container button {
-            width: 100%;
-            padding: 10px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            font-size: 16px;
-            cursor: pointer;
-        }
+    }
 
-        .Signup-container button:hover {
-            background-color: #45a049;
-        }
-    </style>
-</head>
+    .login-container input {
+        width: 100%;
+        padding: 10px;
+        margin: 10px 0;
+        border: 1px solid rgb(255, 255, 255);
+        border-radius: 5px;
+        font-size: 16px;
+    }
 
-<body>
+    .login-container input[type="checkbox"] {
+        width: auto;
+        height: 100%;
+    }
 
-    <div class="Signup-container">
+    .login-container button {
+        width: 100%;
+        padding: 10px;
+        background-color: rgb(219, 227, 219);
+        color: rgb(0, 0, 0);
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+    .login-container button:hover {
+        background-color: #aeb4af;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="login-background">
+    <div class="login-container">
         <div class="logo" style="text-align: center;">
-
             <!-- Add the logo here -->
             <img src="https://res.cloudinary.com/dljndgwcl/image/upload/v1727355734/IMG_20240926_182912-removebg-preview_pzku1l.png"
                 alt="Logo">
-
-            <!-- Login form -->
-            <form method="post">
-                <h4 style="text-align:start">
-                    E-mail
-                    <input type="email" name="email" id="email" placeholder="Email" required>
-
-                    <h4 style="text-align:start">
-                        Password
-
-                        <input type="password" name="password" id="password" placeholder="Password" required>
-
-                        <!-- Checkbox to show/hide password -->
-                        <form>
-                            <label>
-                                <input type="checkbox" id="showPassword"> Show
-                                Password
-                            </label>
-                        </form>
-
-                        <button type="Login">Login</button>
-            </form>
         </div>
+        <!-- Signup form -->
+        <form method="post">
+            <h4 style="text-align:start">E-mail
+                <input type="email" name="email" id="email" placeholder="Email" required>
 
-        <script>
-            // JavaScript to toggle the password visibility
-            const passwordInput = document.getElementById('password');
-            const showPasswordCheckbox = document.getElementById('showPassword');
+                <h4 style="text-align:start">Password
+                    <input type="password" name="password" id="password" placeholder="Password" required>
+                    <!-- Checkbox to show/hide password -->
+                    <label>
+                        <input type="checkbox" id="showPassword"> Show Password
+                    </label>
 
-            showPasswordCheckbox.addEventListener('change', function () {
-                if (this.checked) {
-                    passwordInput.type = 'text';
-                } else {
-                    passwordInput.type = 'password';
-                }
-            });
-        </script>
+                    <button type="submit">Login</button>
+                    <br>
+                    <br>
+                    <p>Don't have an account? <a href="/signup">signup</a></p>
+        </form>
+    </div>
+</div>
 
-</body>
+<script>
+    // JavaScript to toggle the password visibility
+    const passwordInput = document.getElementById('password');
+    const confirmPasswordInput = document.getElementById('confirmpassword');
+    const showPasswordCheckbox = document.getElementById('showPassword');
 
-</html>
+    showPasswordCheckbox.addEventListener('change', function () {
+        if (this.checked) {
+            passwordInput.type = 'text';
+            confirmPasswordInput.type = 'text';
+        } else {
+            passwordInput.type = 'password';
+            confirmPasswordInput.type = 'password';
+        }
+    });
+</script>
+{% endblock %}
