@@ -9,6 +9,7 @@ def signup():
         name=request.form.get('first_name')
         pass1=request.form.get('password')
         pass2=request.form.get('confirmpassword')
+        print(email,name,pass1,pass2)
         
         if not email:
             flash('Please enter correct email address ex: @gmail.com',category='error')
