@@ -1,8 +1,15 @@
 from . import db
 from flask_login import UserMixin
+from sqlalchemy import func
 
 class complaints(db.models):
-    id = db.Column(db.Integer, primary_key=True)
+    complaint_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    img = db.column(db.LargeBinary, nullable=False)
+    description = db.column(db.Text, nullable=False)
+    longitude = db.column(db.Float, nullable=False)
+    latitude = db.column(db.Float, nullable=False)
+    date = db.column(db.DateTime(timezone=True), default=func.now())
+    
     
 
 class User(db.Model, UserMixin):
