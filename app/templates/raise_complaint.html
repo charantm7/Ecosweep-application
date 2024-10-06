@@ -63,17 +63,17 @@
 {% endblock %}
 {% block content %}
 
-<div class="complaint-container">
+<div class="complaint-container" method="post">
     <h2>Raise a Complaint</h2>
 
     <!-- Geolocation Section -->
     <label for="location">Location (Automatically Tagged):</label>
-    <input type="text" id="location" placeholder="Fetching your location..." readonly>
+    <input type="text" name="location" id="location" placeholder="Fetching your location..." readonly>
     <button id="getLocation">Get My Location</button>
 
     <!-- Camera Capture Section -->
     <label for="camera">Capture an Image of the Issue:</label>
-    <video id="cameraStream" class="camera-preview" autoplay></video>
+    <video id="cameraStream" name="image" class="camera-preview" autoplay></video>
     <button id="captureImage">Capture Image</button>
     <canvas id="cameraOutput" class="camera-preview" style="display:none;"></canvas>
 
@@ -91,7 +91,7 @@
 
     <!-- Description -->
     <label for="description">Description:</label>
-    <textarea id="description" rows="4" placeholder="Describe the issue..."></textarea>
+    <textarea id="description" name="description" rows="4" placeholder="Describe the issue..."></textarea>
 
     <!-- Submit Button -->
     <a href="/submit_complaint"><button id="submitComplaint">Submit Complaint</button></a>
