@@ -1,5 +1,5 @@
 from flask import Blueprint,render_template,request,flash,redirect,url_for
-from .models import User, Complaints
+from .models import User, Complaints, Student
 from werkzeug.security import generate_password_hash,check_password_hash
 from . import db
 from flask_login import login_user,logout_user,current_user,login_required
@@ -90,11 +90,32 @@ def submit_complaint():
 
     return redirect(url_for('user_interface.home'))
 
-@Auth.route('/admin_panel')
+
+@Auth.route('/admin_panel',methods=['POST',['GET']])
 @login_required
 def admin_panel():
-    if current_user.id==3:
+    if current_user.id==1:
         # Fetch all complaints from the database
-        Complaint = Complaints.query.get()
-        return render_template('admin.html', Complaints=Complaint)
+        Complaint = Complaints.query.all()
+        return render_template('admin.html', Complaint=Complaint)
     return render_template('404.html')
+
+@Auth.route('/add',methods=['POST','GET'])
+def add():
+    if request.method == 'POST':
+        firstname=request.form.get('firstname')
+        lastname=request.form.get('lastname')
+        email=request.form.get('email')
+        age=request.form.get('age')
+        bio=request.form.get('bio')
+
+        new_add = Student(firstname=firstname,lastname=lastname,email=email,age=age,bio=bio)
+        db.session.add(new_add)
+        db.session.commit()
+
+
+
+@Auth.route('/a2')
+def a2():
+    students = Student.query.all()
+    return render_template('a2.html', students=students)
