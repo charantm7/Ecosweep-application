@@ -63,40 +63,44 @@
 {% endblock %}
 {% block content %}
 
-<div class="complaint-container" method="post">
-    <h2>Raise a Complaint</h2>
 
-    <!-- Geolocation Section -->
-    <label for="location">Location (Automatically Tagged):</label>
-    <input type="text" name="location" id="location" placeholder="Fetching your location..." readonly>
-    <button id="getLocation">Get My Location</button>
+<form id="complaintForm" action="/submit_complaint" method="post">
+    <div class="complaint-container">
+        <h2>Raise a Complaint</h2>
 
-    <!-- Camera Capture Section -->
-    <label for="camera">Capture an Image of the Issue:</label>
-    <video id="cameraStream" name="image" class="camera-preview" autoplay></video>
-    <button id="captureImage">Capture Image</button>
-    <canvas id="cameraOutput" class="camera-preview" style="display:none;"></canvas>
+        <!-- Geolocation Section -->
+        <label for="location">Location (Automatically Tagged):</label>
+        <input type="text" name="location" id="location" placeholder="Fetching your location..." readonly>
+        <button type="button" id="getLocation">Get My Location</button>
 
-    <!-- Camera Switcher -->
-    <label for="cameraSwitch">Select Camera:</label>
-    <select id="cameraSwitch">
-        <option value="environment">Rear Camera</option>
-        <option value="user">Front Camera</option>
+        <!-- Camera Capture Section -->
+        <label for="camera">Capture an Image of the Issue:</label>
+        <video id="cameraStream" name="image" class="camera-preview" autoplay></video>
+        <button type="button" id="captureImage">Capture Image</button>
+        <canvas id="cameraOutput" name="cameraOutput" class="camera-preview" style="display:none;"></canvas>
 
-    </select>
+        <!-- Camera Switcher -->
+        <label for="cameraSwitch">Select Camera:</label>
+        <select id="cameraSwitch">
+            <option value="environment">Rear Camera</option>
+            <option value="user">Front Camera</option>
+        </select>
 
-    <!-- Upload Image -->
-    <label for="imageUpload">Or Upload an Image:</label>
-    <input type="file" id="imageUpload" accept="image/*">
+        <!-- Upload Image -->
+        <label for="imageUpload">Or Upload an Image:</label>
+        <input type="file" id="imageUpload" accept="image/*">
 
-    <!-- Description -->
-    <label for="description">Description:</label>
-    <textarea id="description" name="description" rows="4" placeholder="Describe the issue..."></textarea>
+        <!-- Description -->
+        <label for="description">Description:</label>
+        <textarea id="description" name="description" rows="4" placeholder="Describe the issue..."></textarea>
 
-    <!-- Submit Button -->
-    <a href="/submit_complaint"><button id="submitComplaint">Submit Complaint</button></a>
-    <a href="/"><button>Back</button></a>
-</div>
+        <!-- Submit Button -->
+        <button type="submit" id="submitComplaint">Submit Complaint</button>
+        <a href="/"><button type="button">Back</button></a>
+    </div>
+</form>
+    
+
 
 
 <script>
@@ -161,14 +165,14 @@
         canvas.drawImage(cameraStream, 0, 0, cameraOutput.width, cameraOutput.height);
         cameraOutput.style.display = 'block';
         cameraStream.style.display = 'none';
-    });
 
-    // Submit Complaint (Just a mockup of submission)
-    const submitButton = document.getElementById('submitComplaint');
-    submitButton.addEventListener('click', () => {
-        const description = document.getElementById('description').value;
-        const location = locationInput.value;
-        alert(`Complaint submitted!\nLocation: ${location}\nDescription: ${description}`);
+        // Convert captured image to base64 and store it in a hidden input
+        const imageData = cameraOutput.toDataURL('image/png');
+        const hiddenInput = document.createElement('input');
+        hiddenInput.type = 'hidden';
+        hiddenInput.name = 'cameraOutput';
+        hiddenInput.value = imageData;
+        document.getElementById('complaintForm').appendChild(hiddenInput);
     });
 </script>
 

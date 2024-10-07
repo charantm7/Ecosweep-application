@@ -1,49 +1,56 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "base.html" %}
+{% block title %}Admin-panel{% endblock %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Panel - Complaints</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-</head>
+{% block head %}
+<style>
+    body{
+        font-family: Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    #container{
+        margin-top: 50px;
+        width: 1000px;
+        margin: auto;
+        padding: 40px;
+    }
+</style>
 
-<body>
-    <div class="container mt-5">
-        <h2 class="text-center">Admin Panel - List of Complaints</h2>
+{% endblock %}
+
+{% block content %}
+    <div class="container mt-5" id="container">
+        <h2>Admin Panel - Complaints Overview</h2>
         <table class="table table-bordered table-striped mt-4">
             <thead class="thead-dark">
                 <tr>
                     <th>ID</th>
-                    <th>Image</th>
+                    <th>Location</th>
                     <th>Description</th>
-                    <th>Location (Longitude, Latitude)</th>
-                    <th>Timestamp</th>
+                    <th>Image</th>
                 </tr>
             </thead>
             <tbody>
                 {% for complaint in complaints %}
                 <tr>
                     <td>{{ complaint.id }}</td>
+                    <td>{{ complaint.location }}</td>
+                    <td>{{ complaint.description }}</td>
                     <td>
-                        {% if complaint.image %}
-                        <img src="data:image/jpeg;base64,{{ complaint.image | b64encode }}" alt="Complaint Image"
-                            width="100">
+                        {% if complaint.image_data %}
+                        <img src="data:image/png;base64,{{ complaint.image_data|b64encode }}" alt="Complaint Image" style="width: 150px; height: auto;">
                         {% else %}
-                        No Image
+                        No Image Provided
                         {% endif %}
                     </td>
-                    <td>{{ complaint.description }}</td>
-                    <td>{{ complaint.longitude }}, {{ complaint.latitude }}</td>
-                    <td>{{ complaint.timestamp }}</td>
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
+        <a href="/" class="btn btn-primary">Back to Home</a>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-
-</html>
+{% endblock %}

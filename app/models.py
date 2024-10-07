@@ -3,13 +3,12 @@ from flask_login import UserMixin
 from sqlalchemy.sql import func
 
 class Complaints(db.Model):
-    complaint_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    img = db.Column(db.LargeBinary)
-    description = db.Column(db.Text(1000))
-    longitude = db.Column(db.Float(200))
-    latitude = db.Column(db.Float(200))
-    date = db.Column(db.DateTime(timezone=True), default=func.now())
+    id = db.Column(db.Integer, primary_key=True)
+    location = db.Column(db.String(255), nullable=False)
+    description = db.Column(db.Text, nullable=False)
+    image_data = db.Column(db.LargeBinary, nullable=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    
     
     
 
