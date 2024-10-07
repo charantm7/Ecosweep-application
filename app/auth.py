@@ -22,7 +22,7 @@ def signup():
             flash('Please enter correct email address ex: @gmail.com',category='error')
         elif len(name) <=2:
             flash('Name should be greater than 2 characters!',category='error')
-        elif len(pass1) <=6:
+        elif len(pass1) <=4:
             flash('Password should be greater than 6 characters!',category='error')
         elif pass1 != pass2:
             flash('Password mismatch!', category='error')
