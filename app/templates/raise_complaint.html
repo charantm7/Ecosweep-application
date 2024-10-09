@@ -63,7 +63,6 @@
 {% endblock %}
 {% block content %}
 
-
 <form id="complaintForm" action="/submit_complaint" method="post">
     <div class="complaint-container">
         <h2>Raise a Complaint</h2>
@@ -88,7 +87,7 @@
 
         <!-- Upload Image -->
         <label for="imageUpload">Or Upload an Image:</label>
-        <input type="file" id="imageUpload" accept="image/*">
+        <input type="file" name="img" id="imageUpload" accept="image/*">
 
         <!-- Description -->
         <label for="description">Description:</label>

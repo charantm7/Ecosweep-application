@@ -1,14 +1,18 @@
 from flask import Blueprint,render_template,request,flash,redirect,url_for
-from .models import User, Complaints, Student
+from .models import User, Complaints
 from werkzeug.security import generate_password_hash,check_password_hash
 from . import db
 from flask_login import login_user,logout_user,current_user,login_required
 import base64
+import os
+from werkzeug.utils import secure_filename
 
 
 Auth = Blueprint('Auth',__name__)
 
-@Auth.route('/signup',methods=['POST','GET',])
+
+
+@Auth.route('/signup',methods=['POST','GET'])
 def signup():
     if request.method=='POST':
         email=request.form.get('email')
@@ -72,50 +76,46 @@ def profile(id):
 @Auth.route('/submit_complaint', methods=['POST','GET'])
 @login_required
 def submit_complaint():
-    location = request.form.get('location')
-    description = request.form.get('description')
+    if request.method == 'POST':
+        location = request.form.get('location')
+        description = request.form.get('description')
+        img=request.files.get('img')
 
-    # Get the captured image from the form if available
-    image_data = None
-    if 'cameraOutput' in request.form and request.form['cameraOutput']:
-        image_base64 = request.form['cameraOutput'].split(',')[1]  # Extract base64 part
-        image_data = base64.b64decode(image_base64)  # Decode to binary
+          # Decode to binary
 
-    # Create a new complaint object
-    new_complaint = Complaints(location=location, description=description, image_data=image_data)
+        if img:
+        # Secure the filename to prevent directory traversal attacks
+            filename = secure_filename(img.filename)
 
-    db.session.add(new_complaint)
-    db.session.commit()
-    flash('Complaint submitted successfully!', category='success')
+        # Define the full path where the image will be saved
+            path = os.path.join('static/userimages', filename)
 
+        # Save the image to the specified path
+            path.save(path)
+        else:
+            path = None
+
+        # Create a new complaint object
+        new_complaint = Complaints(location=location, description=description,  user_id = current_user.id, img1=path)
+
+        db.session.add(new_complaint)
+        db.session.commit()
+        flash('Complaint submitted successfully!', category='success')
+
+        return redirect(url_for('user_interface.home'))
     return redirect(url_for('user_interface.home'))
 
-
-@Auth.route('/admin_panel',methods=['POST',['GET']])
+@Auth.route('/admin_panel')
 @login_required
 def admin_panel():
-    if current_user.id==1:
+    
         # Fetch all complaints from the database
-        Complaint = Complaints.query.all()
-        return render_template('admin.html', Complaint=Complaint)
-    return render_template('404.html')
+    complaint = Complaints.query.all()
+    return render_template('admin.html', complaint=complaint)
 
-@Auth.route('/add',methods=['POST','GET'])
-def add():
-    if request.method == 'POST':
-        firstname=request.form.get('firstname')
-        lastname=request.form.get('lastname')
-        email=request.form.get('email')
-        age=request.form.get('age')
-        bio=request.form.get('bio')
 
-        new_add = Student(firstname=firstname,lastname=lastname,email=email,age=age,bio=bio)
-        db.session.add(new_add)
-        db.session.commit()
+    
 
 
 
-@Auth.route('/a2')
-def a2():
-    students = Student.query.all()
-    return render_template('a2.html', students=students)
+
