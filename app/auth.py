@@ -5,7 +5,7 @@ from . import db
 from flask_login import login_user,logout_user,current_user,login_required
 import base64
 import os
-from werkzeug.utils import secure_filename
+from io import BytesIO
 
 
 Auth = Blueprint('Auth',__name__)
@@ -73,45 +73,48 @@ def profile(id):
     user = User.query.get(id)
     return render_template('profile.html',user=user)
 
-@Auth.route('/submit_complaint', methods=['POST','GET'])
+@Auth.route('/submit_complaint', methods=['POST', 'GET'])
 @login_required
 def submit_complaint():
     if request.method == 'POST':
         location = request.form.get('location')
         description = request.form.get('description')
-        img=request.files.get('img')
 
-          # Decode to binary
+        image_data = None
+        if 'cameraOutput' in request.form and request.form['cameraOutput']:
+            image_base64 = request.form['cameraOutput'].split(',')[1] 
+            image_data = base64.b64decode(image_base64) 
 
-        if img:
-        # Secure the filename to prevent directory traversal attacks
-            filename = secure_filename(img.filename)
-
-        # Define the full path where the image will be saved
-            path = os.path.join('static/userimages', filename)
-
-        # Save the image to the specified path
-            path.save(path)
-        else:
-            path = None
-
-        # Create a new complaint object
-        new_complaint = Complaints(location=location, description=description,  user_id = current_user.id, img1=path)
+        new_complaint = Complaints(
+            location=location, 
+            description=description, 
+            user_id=current_user.id, 
+            image_data=image_data
+        )
 
         db.session.add(new_complaint)
         db.session.commit()
-        flash('Complaint submitted successfully!', category='success')
 
+        flash('Complaint submitted successfully!', category='success')
         return redirect(url_for('user_interface.home'))
+
     return redirect(url_for('user_interface.home'))
+
 
 @Auth.route('/admin_panel')
 @login_required
 def admin_panel():
+    if current_user.id == 1:
+        complaints = Complaints.query.all()
+
+        for complaint in complaints:
+            if complaint.image_data:
+                complaint.image_data = base64.b64encode(complaint.image_data).decode('utf-8')
+
+        return render_template('admin.html', complaints=complaints)
     
-        # Fetch all complaints from the database
-    complaint = Complaints.query.all()
-    return render_template('admin.html', complaint=complaint)
+    return render_template('404.html')
+
 
 
     

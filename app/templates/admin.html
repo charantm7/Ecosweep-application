@@ -4,46 +4,52 @@
 {% block head %}
     <style>
         body{
-            background-color: rgb(130, 129, 129);
+            background-color: rgb(235, 230, 230);
+            padding: 30px;
+            width: 100%;
         }
     </style>
 {% endblock %}
 
 
 {% block content %}
-    <div class="container mt-5">
-        <h2>Complaints List</h2>
-        <table class="table table-bordered table-striped">
-            <thead>
+<div class="container mt-5">
+    <h2>Complaints List</h2>
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Location</th>
+                <th>Description</th>
+                <th>Image</th>
+                <th>User ID</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- which use to create multiple of tables as per the complaints register -->
+            {% for complaint in complaints %}
                 <tr>
-                    <th>ID</th>
-                    <th>Location</th>
-                    <th>Description</th>
-                    <th>Image</th>
-                    <th>User ID</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for complaints in complaint %}
-                    <tr>
-                        <td>{{ complaints.id }}</td>
-                        <td>{{ complaints.location }}</td>
-                        <td>{{ complaints.description }}</td>
-                        <td>
-                            {% if complaints.img1 %}
-                                <img src="{{ complaints.img1 }}" alt="Complaint Image" width="100">
-                            {% else %}
-                                <p>No image available</p>
-                            {% endif %}
-                        </td>
-                        <td>{{ complaints.user_id }}</td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-        <a href="/" class="btn btn-secondary mt-3">Back</a>
-    </div>
+                    <td>{{ complaint.id }}</td>
+                    <td>{{ complaint.location }}</td>
+                    <td>{{ complaint.description }}</td>
+                    <td>
+                        {% if complaint.image_data %}
 
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+                            <!-- this line converts binary data into the base64 and display the image -->
+                            <img src="data:image/png;base64,{{ complaint.image_data }}" alt="Complaint Image" width="200">
+                        {% else %}
+                            <p>No image available</p>
+                        {% endif %}
+                    </td>
+                    <td>{{ complaint.user_id }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <a href="/" class="btn btn-secondary mt-3">Back</a>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+
 {% endblock %}

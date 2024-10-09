@@ -76,7 +76,7 @@
         <label for="camera">Capture an Image of the Issue:</label>
         <video id="cameraStream" name="image" class="camera-preview" autoplay></video>
         <button type="button" id="captureImage">Capture Image</button>
-        <canvas id="cameraOutput" name="cameraOutput" class="camera-preview" style="display:none;"></canvas>
+        <canvas id="cameraOutput" class="camera-preview" style="display:none;"></canvas>
 
         <!-- Camera Switcher -->
         <label for="cameraSwitch">Select Camera:</label>
@@ -98,11 +98,9 @@
         <a href="/"><button type="button">Back</button></a>
     </div>
 </form>
-    
-
-
 
 <script>
+    //js is from gpt :)
     // Geolocation
     const getLocationButton = document.getElementById('getLocation');
     const locationInput = document.getElementById('location');
@@ -174,5 +172,6 @@
         document.getElementById('complaintForm').appendChild(hiddenInput);
     });
 </script>
+
 
 {% endblock %}
