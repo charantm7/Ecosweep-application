@@ -118,8 +118,4 @@ def admin_panel():
 
 
 
-    
-
-
-
 
